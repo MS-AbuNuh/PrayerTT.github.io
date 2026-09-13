@@ -6,34 +6,35 @@
     <title>مزرعة الصلوات التفاعلية</title>
     <style>
         :root {
-            --bg-farm: #eef7f2;
+            --bg-farm: #f0f7f4;
             --primary: #2e7d32;
-            --off-gray: #b0bec5;
-            --j الجماعة: #4caf50;
+            --off-gray: #cfd8dc;
+            --j-جماعة: #4caf50;
             --m-منفرد: #ff9800;
+            --trunk: #795548;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-farm);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             color: #333;
             text-align: center;
         }
         header {
             background: white;
             padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.04);
             margin-bottom: 20px;
         }
-        h1 { color: var(--primary); margin: 0 0 10px 0; }
-        .date-info { font-weight: bold; color: #555; }
+        h1 { color: var(--primary); margin: 0 0 5px 0; font-size: 24px; }
+        .date-info { font-weight: bold; color: #666; font-size: 14px; }
         .tabs {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .tab-btn {
             background: #fff;
@@ -53,81 +54,124 @@
             display: none;
             background: white;
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.04);
         }
         .view-content.active { display: block; }
         
-        /* View 1: Farm Layout */
+        /* View 1: طابع المزرعة والأشجار الحقيقية */
         .farm-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
             padding: 10px;
+            background: #e8f5e9;
+            border-radius: 15px;
+            border: 3px dashed #a5d6a7;
         }
-        .tree-card {
-            background: #f9fbf9;
-            border: 2px dashed #a5d6a7;
-            border-radius: 12px;
-            padding: 15px;
-            position: relative;
-        }
-        .tree-title {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 5px;
-        }
-        .leaves-container {
+        .tree-container {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            padding: 20px 10px;
+            position: relative;
         }
-        .leaf {
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
+        /* تاج الشجرة الأخضر الافتراضي الخلفي */
+        .tree-crown {
+            width: 200px;
+            height: 200px;
+            background: #c8e6c9;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            gap: 12px;
+            padding: 15px;
+            box-sizing: border-box;
+            box-shadow: inset 0 -10px 0 rgba(0,0,0,0.05), 0 6px 12px rgba(0,0,0,0.05);
+            z-index: 2;
+        }
+        /* جذع الشجرة */
+        .tree-trunk {
+            width: 24px;
+            height: 50px;
+            background: var(--trunk);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1;
+            margin-top: -5px;
+        }
+        .day-label {
+            margin-top: 8px;
+            font-weight: bold;
+            background: var(--primary);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 15px;
             font-size: 14px;
-            font-weight: 500;
-            user-select: none;
-            transition: background 0.2s, transform 0.1s;
-            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
-        .leaf:active { transform: scale(0.98); }
-        .leaf.state-0 { background-color: var(--off-gray); color: white; }
-        .leaf.state-1 { background-color: var(--j-الجماعة); color: white; }
-        .leaf.state-2 { background-color: var(--m-منفرد); color: white; }
+        
+        /* أوراق الشجر التفاعلية الدائرية */
+        .leaf {
+            width: 46px;
+            height: 46px;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .leaf-text {
+            transform: rotate(45deg);
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .leaf.state-0 { background: var(--off-gray); }
+        .leaf.state-1 { background: var(--j-جماعة); transform: rotate(-45deg) scale(1.1); }
+        .leaf.state-2 { background: var(--m-منفرد); transform: rotate(-45deg) scale(1.1); }
 
-        /* View 2: Reports */
+        /* View 2: التقارير */
         .report-section { text-align: right; max-width: 600px; margin: 0 auto; }
         .stats-box {
             display: flex;
             justify-content: space-around;
             background: #f1f8e9;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             margin-bottom: 20px;
             font-weight: bold;
+            border: 1px solid #d0e7d2;
         }
-        .stat-item.g { color: var(--j-الجماعة); }
+        .stat-item.g { color: var(--j-جماعة); }
         .stat-item.m { color: var(--m-منفرد); }
         .stat-item.o { color: #757575; }
         .history-list { list-style: none; padding: 0; }
         .history-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+            padding: 12px;
+            border-bottom: 1px solid #edf2f0;
             font-size: 14px;
+            line-height: 1.6;
         }
         .archive-btn {
             background: #1565c0;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
             margin-top: 15px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(21, 101, 192, 0.2);
         }
     </style>
 </head>
@@ -143,21 +187,21 @@
         <button class="tab-btn" onclick="switchView('view2')">التقارير والإحصائيات (View 2)</button>
     </div>
 
-    <!-- View 1: All Trees -->
+    <!-- View 1: حقل الأشجار -->
     <div id="view1" class="view-content active">
         <div class="farm-grid" id="farmGrid"></div>
     </div>
 
-    <!-- View 2: Summary Report -->
+    <!-- View 2: التقارير -->
     <div id="view2" class="view-content">
         <div class="report-section">
-            <h3>مختصر الأداء الحالي</h3>
+            <h3>مختصر الأداء الحالي للأسبوع</h3>
             <div class="stats-box">
                 <div class="stat-item g">جماعة: <span id="statG">0</span></div>
                 <div class="stat-item m">منفرد: <span id="statM">0</span></div>
-                <div class="stat-item o">لم تصلّى/مطفأة: <span id="statO">35</span></div>
+                <div class="stat-item o">لم تصلّى: <span id="statO">35</span></div>
             </div>
-            <h3>تفاصيل أيام الأسبوع</h3>
+            <h3>سجل الصلوات اليومي</h3>
             <ul class="history-list" id="historyList"></ul>
             <button class="archive-btn" onclick="archiveWeek()">ترحيل إلى مجلد "الأسبوع الأول"</button>
         </div>
@@ -165,16 +209,14 @@
 
     <script>
         const days = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-        const prayers = ["الفجر", "الظهر", "العصر", "المغرب", "العشاء"];
+        const prayers = ["فجر", "ظهر", "عصر", "مغرب", "عشاء"];
         
-        // تحميل البيانات السابقة أو إنشاء بيانات جديدة
         let farmData = JSON.parse(localStorage.getItem('prayerFarmData')) || {};
         
-        // تهيئة البيانات الافتراضية إذا كانت فارغة
         days.forEach(day => {
             if (!farmData[day]) {
                 farmData[day] = {};
-                prayers.forEach(p => farmData[day][p] = 0); // 0 = OFF, 1 = جماعة, 2 = منفرد
+                prayers.forEach(p => farmData[day][p] = 0);
             }
         });
 
@@ -192,7 +234,6 @@
         }
 
         function toggleLeaf(day, prayer) {
-            // دورة الضغط: 0 -> 1 -> 2 -> 0
             farmData[day][prayer] = (farmData[day][prayer] + 1) % 3;
             saveAndRefresh();
         }
@@ -201,15 +242,23 @@
             const grid = document.getElementById('farmGrid');
             grid.innerHTML = '';
             days.forEach(day => {
-                let treeHtml = `<div class="tree-card"><div class="tree-title">${day}</div><div class="leaves-container">`;
+                let treeHtml = `
+                    <div class="tree-container">
+                        <div class="tree-crown">`;
+                
                 prayers.forEach(prayer => {
                     const state = farmData[day][prayer];
-                    let stateText = "مطفأة";
-                    if(state === 1) stateText = "جماعة";
-                    if(state === 2) stateText = "منفرد";
-                    treeHtml += `<div class="leaf state-${state}" onclick="toggleLeaf('${day}', '${prayer}')">${prayer} (${stateText})</div>`;
+                    treeHtml += `
+                        <div class="leaf state-${state}" onclick="toggleLeaf('${day}', '${prayer}')">
+                            <span class="leaf-text">${prayer}</span>
+                        </div>`;
                 });
-                treeHtml += `</div></div>`;
+                
+                treeHtml += `
+                        </div>
+                        <div class="tree-trunk"></div>
+                        <div class="day-label">${day}</div>
+                    </div>`;
                 grid.innerHTML += treeHtml;
             });
         }
@@ -234,17 +283,17 @@
 
             document.getElementById('statG').innerText = totalG;
             document.getElementById('statM').innerText = totalM;
-            document.getElementById('statO').innerText = totalO;
-        }
-
-        function archiveWeek() {
+            document.getElementById('statO').innerText = totalO;}
+                function archiveWeek() {
             alert('تم ترحيل وحفظ الأسبوع بنجاح في سجل الأرشيف باسم "الأسبوع الأول" وتم تصفير المزرعة!');
             // تصفير المزرعة للبدء من جديد
-            days.forEach(day => { prayers.forEach(p => farmData[day][p] = 0); });
+            days.forEach(day => { 
+                prayers.forEach(p => farmData[day][p] = 0); 
+            });
             saveAndRefresh();
         }
 
-        // التشغيل الأول للموقع
+        // التشغيل الأول والضروري للموقع لعرض الأشجار والتقارير فور فتح الصفحة
         renderFarm();
         renderReports();
     </script>
